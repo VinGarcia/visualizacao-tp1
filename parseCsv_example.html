@@ -1,0 +1,45 @@
+
+<html>
+	<head>
+		<title>Page Title</title>
+		<meta charset="utf-8">
+		<title>D3 Test</title>
+		<script type="text/javascript" src="js/d3.js"></script>
+
+		<!-- here we read parseCsv.js:  --!>
+		<script type="text/javascript" src="js/parseCsv.js"></script>
+
+	</head>
+	<body>
+		<h1>Page Title</h1>
+
+		<script type="text/javascript">
+    
+		parseCsv('data/all.txt', function(graphs) {
+			// graphs is an array of graphs
+			console.log('graphs instanceof Array? ' + (graphs instanceof Array))
+
+			// all.txt contained 100 graphs:
+			console.log('Total number of graphs: ' + graphs.length)
+
+			// Show how the line 0 of graph 20 looks like:
+			console.log('Example line (graphs[20][0]): ' + JSON.stringify(graphs[20][0]))
+		})
+
+		</script>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
