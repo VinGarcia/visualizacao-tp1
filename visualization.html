@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>Trabalho de Visualização</title>
+    <script src="d3.min.js"></script>
+
+  <style type="text/css">
+
+body {
+  font: 10px sans-serif;
+}
+
+svg {
+  padding: 10px 0 0 10px;
+}
+
+.arc {
+  stroke: #fff;
+}
+
+  </style>
+  </head>
+  <body>
+    <script type="text/javascript">
+
+d3.csv("exemplo.csv", function(graph) {
+
+  var m = 10,
+      r = 60,
+      z = d3.scale.category20c();
+
+      var donutWidth = 20;                           
+
+
+  var pie = d3.layout.pie()
+      .value(function(d) { return + d.placeID; })
+      .sort(function(a, b) { return b.placeID - a.placeID; });
+
+  var arc = d3.svg.arc()
+      .innerRadius(r )
+      .outerRadius(r- donutWidth);
+
+  var people = d3.nest()
+      .key(function(d) { return d.person; })
+      .entries(graph);
+
+  var svg = d3.select("body").selectAll("div")
+      .data(people)
+      .enter().append("div") 
+      .style("display", "inline-block")
+      .style("width", (r + m) * 2 + "px")
+      .style("height", (r + m) * 2 + "px")
+    .append("svg:svg")
+      .attr("width", (r + m) * 2)
+      .attr("height", (r + m) * 2)
+    .append("svg:g")
+      .attr("transform", "translate(" + (r + m) + "," + (r + m) + ")");
+
+  svg.append("svg:text")
+      .attr("dy", ".35em")
+      .attr("text-anchor", "middle")
+      .text(function(d) { return d.key; });
+
+  var g = svg.selectAll("g")
+      .data(function(d) { return pie(d.values); })
+      .enter().append("svg:g");
+
+  g.append("svg:path")
+      .attr("d", arc)
+      .style("fill", function(d) { return z(d.data.place); })
+    .append("svg:title")
+      .text(function(d) { return d.data.place + ": " + d.data.placeID; });
+
+  g.filter(function(d) { return d.endAngle - d.startAngle > .2; }).append("svg:text")
+      .attr("dy", ".35em")
+      .attr("text-anchor", "middle")
+      .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")rotate(" + angle(d) + ")"; })
+      .text(function(d) { return d.data.place; });
+
+  function angle(d) {
+    var a = (d.startAngle + d.endAngle) * 90 / Math.PI - 90;
+    return a > 90 ? a - 180 : a;
+  }
+});
+
+    </script>
+  </body>
+</html>
