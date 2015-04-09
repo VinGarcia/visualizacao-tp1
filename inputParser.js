@@ -68,3 +68,22 @@ Person.prototype.computeVisitMap = function() {
     this.visitMap[type] = count;
   }
 };
+
+// Returns an array of objects containing data related to visits. Each
+// object/entry has the place type and number of visits. This is mainly used to
+// conform with D3's data layout.
+Person.prototype.getVisitArray = function() {
+  var visitArray = [];
+
+  for (var placeType in this.visitMap) {
+    if (!this.visitMap.hasOwnProperty(placeType))
+      continue;
+
+    entry = {};
+    entry.placeType = placeType;
+    entry.numVisits = this.visitMap[placeType];
+    visitArray.push(entry);
+  }
+
+  return visitArray;
+}
