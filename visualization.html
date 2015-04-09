@@ -3,9 +3,9 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <title>Trabalho de Visualização</title>
-    <script src="d3.min.js"></script>
-    <script src="data.js" charset="utf-8"></script>
-    <script src="inputParser.js" charset="utf-8"></script>
+    <script src="js/d3.min.js"></script>
+    <script src="data/data.json" charset="utf-8"></script>
+    <script src="js/inputParser.js" charset="utf-8"></script>
 
     <style type="text/css">
       body { font: 10px sans-serif; }
@@ -19,7 +19,6 @@
     <script type="text/javascript">
       inputParser.initialize();
 
-      // Initially plot the first graph.
       window.onload = function() {
         drawCharts(inputParser.graphs[document.getElementById("graphID").value]);
       }
