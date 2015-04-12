@@ -19,8 +19,8 @@ inputParser.initialize = function(rawData) {
 		var currentPerson = new Person();
 
 		// Note that the graph entries are sorted by id.
-		for (var entry in graph) {
-			entry = graph[entry];
+		for (var i in graph) {
+			var entry = graph[i];
 			lineCount++;
 
 			// If a new person id is found:
@@ -30,6 +30,7 @@ inputParser.initialize = function(rawData) {
 					pc++,
 					entry.personId
 				);
+				currentPerson.graphID = i;
 
 				personList.push(currentPerson);
 				this.gPersonList.push(currentPerson);
