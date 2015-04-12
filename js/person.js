@@ -1,8 +1,8 @@
 // Person data type
 function Person(gid, id) {
 
-	this.id = id || null;
-	this.gid = gid || null;
+	this.id = id;
+	this.gid = gid;
 	this.placeTypes = [];
 	this.placeIDs = [];
 
