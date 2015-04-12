@@ -2,39 +2,45 @@
 // Also offers a set of processing routines.
 var inputParser = {};
 
-inputParser.initialize = function() {
-
+inputParser.initialize = function(rawData) {
 	this.graphs = [];
+	this.gPersonList = [];
+	// Person count:
+	var pc = 0;
 
-	// Parse the raw arrays into a vector of graphs. Each position of GRAPHS has a
+	// Parse the raw arrays into a vector of graphs.
+	// Each position of GRAPHS has a
 	// another vector, with PERSON objects.
-	for (var i = 0; i < rawData.length; i++) {
+	var lineCount=0;
+	for (var graph in rawData) {
+		graph = rawData[graph];
+
 		var personList = [];
-		var graph = rawData[i];
 		var currentPerson = new Person();
 
-		for (var j = 0; j < graph.length; j++) {
-			entry = graph[j];
+		// Note that the graph entries are sorted by id.
+		for (var entry in graph) {
+			entry = graph[entry];
+			lineCount++;
 
+			// If a new person id is found:
 			if (entry.personId != currentPerson.id) {
-				if (currentPerson.id != null)
-					personList.push(currentPerson);
 
-				currentPerson = new Person();
-				currentPerson.id = entry.personId;
+				currentPerson = new Person(
+					pc++,
+					entry.personId
+				);
+
+				personList.push(currentPerson);
+				this.gPersonList.push(currentPerson);
 			}
 
-			currentPerson.placeTypes.push(entry.placeType);
-			currentPerson.placeIDs.push(entry.placeId);
+			// Add this entry to the person history:
+			currentPerson.add(entry.placeType, entry.placeId)
 		}
 
-		personList.push(currentPerson);
 		this.graphs.push(personList);
 	}
-
-	for (var i = 0; i < this.graphs.length; i++)  
-		for (var j = 0; j < this.graphs[i].length; j++)
-			this.graphs[i][j].computeVisitMap();
 
 	return;
 

@@ -1,17 +1,27 @@
 // Person data type
-function Person() {
+function Person(gid, id) {
 
-	this.id = null;
+	this.id = id || null;
+	this.gid = gid || null;
 	this.placeTypes = [];
 	this.placeIDs = [];
 
 	this.similarity = [];
-
+	this.visitMap = {
+		'A':0,'B':0,'C':0,'D':0,'E':0,'F':0,'G':0,'H':0,'I':0,
+		'J':0,'K':0,'L':0,'M':0,'N':0,'O':0,'P':0,'Q':0,'R':0,
+		'S':0,'T':0,'U':0,'V':0,'X':0,'Y':0,'Z':0
+	}
 };
+
+Person.prototype.add = function(place,id) {
+	this.visitMap[place]++;
+	this.placeTypes.push(place)
+	this.placeIDs.push(id)
+}
 
 Person.prototype.computeVisitMap = function() {
 
-	this.visitMap = {};
 	this.numVisits = this.placeTypes.length;
 
 	// Get unique place types.
@@ -22,7 +32,7 @@ Person.prototype.computeVisitMap = function() {
 			unique.push(this.placeTypes[i]);
 
 	// Count occurences of each type.
-	for (var i = 0; i < unique.length; i++) {
+	for (var i in unique) {
 
 		var type = unique[i];
 		var count = 0;
@@ -61,25 +71,14 @@ Person.prototype.getVisitArray = function() {
 // Similarity metric: euclidean
 Person.prototype.simEuclidean = function(person) {
 
-	places = [];
-	for (var i = 0; i < this.placeTypes.length; i++)
-		places.push(this.placeTypes[i]);
-
-	for (var i = 0; i < person.placeTypes.length; i++)
-		if (!(person.placeTypes[i] in places))
-			places.push(person.placeTypes[i]);
-
 	var sim = 0;
-	for (var i = 0; i < places.length; i++) {
+	var a,b;
+	for(L in this.visitMap) {
+		a = this.visitMap[L]
+		b = person.visitMap[L]
 
-		var a = 0, b = 0;
-		if (places[i] in this.placeTypes) a = this.visitMap[i];
-		if (places[i] in person.placeTypes) b = person.visitMap[i];
-
-		if (a + b != 0) sim += Math.sqrt(pow((a - b), 2));
-
+		sim += Math.pow((a - b), 2);
 	}
 
-	return sim;
-
+  return Math.sqrt(sim)
 }
