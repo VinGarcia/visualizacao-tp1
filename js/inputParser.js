@@ -6,7 +6,7 @@ inputParser.initialize = function(rawData) {
 	this.graphs = [];
 	this.gPersonList = [];
 	// Person count:
-	var pc = 0;
+	var graphCount = 0;
 
 	// Parse the raw arrays into a vector of graphs.
 	// Each position of GRAPHS has a
@@ -27,7 +27,7 @@ inputParser.initialize = function(rawData) {
 			if (entry.personId != currentPerson.id) {
 
 				currentPerson = new Person(
-					pc++,
+					graphCount,
 					entry.personId
 				);
 				currentPerson.graphID = i;
@@ -41,8 +41,8 @@ inputParser.initialize = function(rawData) {
 		}
 
 		this.graphs.push(personList);
+    graphCount++;
 	}
 
 	return;
-
 };

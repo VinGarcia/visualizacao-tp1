@@ -7,6 +7,7 @@
     <script src="data/data.json" charset="utf-8"></script>
     <script src="js/inputParser.js" charset="utf-8"></script>
     <script src="js/person.js" charset="utf-8"></script>
+    <script src="js/analyzer.js" charset="utf-8"></script>
 
     <style type="text/css">
       body { font: 10px sans-serif; }
@@ -19,6 +20,7 @@
 
     <script type="text/javascript">
       inputParser.initialize(rawData);
+      analyzer = new Analyzer(inputParser.graphs, 500);
 
       window.onload = function() {
         drawCharts(inputParser.graphs[document.getElementById("graphID").value]);

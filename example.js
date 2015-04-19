@@ -1,0 +1,19 @@
+var rawData = [
+[
+{"personId":1,"placeType":"S","placeId":92},
+{"personId":1,"placeType":"A","placeId":12},
+{"personId":10,"placeType":"Y","placeId":61},
+{"personId":10,"placeType":"D","placeId":24},
+{"personId":10,"placeType":"D","placeId":27}
+]
+,
+[
+{"personId":0,"placeType":"Y","placeId":97},
+{"personId":0,"placeType":"I","placeId":59},
+{"personId":2,"placeType":"R","placeId":91},
+{"personId":10,"placeType":"W","placeId":81},
+{"personId":10,"placeType":"P","placeId":89},
+{"personId":10,"placeType":"D","placeId":66},
+{"personId":10,"placeType":"D","placeId":52}
+]
+];
