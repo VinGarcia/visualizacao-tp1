@@ -1,7 +1,9 @@
 // Person data type
 function Person(gid, id) {
 
+	// This person ID on its own graph.
 	this.id = id;
+	// This person graph ID.
 	this.gid = gid;
 	this.placeTypes = [];
 	this.placeIDs = [];
