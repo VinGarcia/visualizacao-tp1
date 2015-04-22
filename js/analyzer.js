@@ -35,7 +35,7 @@ function Analyzer(graphs, side) {
 	/* * * * * Private Functions: * * * * */
 
 	// When debuging set DEBUG_MODE=true before build.
-	if(DEBUG_MODE===true) {
+	if(typeof DEBUG_MODE==='boolean' && DEBUG_MODE===true) {
 		// Make the private functions public.
 		this.markOutliers = markOutliers;
 		this.generateCoordinates = generateCoordinates;
