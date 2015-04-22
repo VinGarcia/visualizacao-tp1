@@ -121,11 +121,11 @@ function Analyzer(graphs, side) {
       // Randomly assign coordinates to common people.
       for (var j = 0; j < commonPeople.length; j++) {
         // 25% of the screen is kept for outliers.
-        var coord = [self.getRand(side*0.12, side*0.88), self.getRand(side*0.12, side * 0.75)];
+        var coord = [self.getRand(side*0.12, side*0.88), self.getRand(side*0.12, side * 0.65)];
 
         // Compute new random coordinates until we find a valid one.
         while (!self.isCoordAlowed(coord, coordsVector))
-          coord = [self.getRand(side*0.12, side*0.88), self.getRand(side*0.12, side * 0.75)];
+          coord = [self.getRand(side*0.12, side*0.88), self.getRand(side*0.12, side * 0.65)];
 
         coordsVector.push(coord);
         commonPeople[j].x = coord[0];
@@ -135,7 +135,7 @@ function Analyzer(graphs, side) {
 
       // Assign fixed coordinates at the bottom for outliers.
       for (var j = 0; j < outliers.length; j++) {
-        outliers[j].x = (side/outliers.length) * (i+1);
+        outliers[j].x = (side/(outliers.length + 1)) * (j+1);
         outliers[j].y = (side*0.87);
         outliers[j].isOutlier = true;
       }

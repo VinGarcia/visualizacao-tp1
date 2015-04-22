@@ -8,6 +8,7 @@
     <script src="js/inputParser.js" charset="utf-8"></script>
     <script src="js/person.js" charset="utf-8"></script>
     <script src="js/analyzer.js" charset="utf-8"></script>
+    <script src="js/gui.js" charset="utf-8"></script>
 
     <style type="text/css">
       body { font: 10px sans-serif; }
@@ -19,86 +20,14 @@
     <select id="graphID" style="vertical-align:top"/>
 
     <script type="text/javascript">
+      canvasSide = 750;
       inputParser.initialize(rawData);
-      analyzer = new Analyzer(inputParser.graphs, 500);
+      analyzer = new Analyzer(inputParser.graphs, canvasSide);
+
+      buildGraphDropdown();
 
       window.onload = function() {
-        drawCharts(inputParser.graphs[document.getElementById("graphID").value]);
-      }
-
-      function drawCharts(graph) {
-        // Clean old charts before drawing again.
-        d3.select("svg").remove();
-
-        var m = 10,
-            r = 60,
-            z = d3.scale.category20c();
-        var donutWidth = 20;                           
-        var pie = d3.layout.pie()
-            .sort(null)
-            .value(function(d) { return d.numVisits; });
-        var arc = d3.svg.arc()
-            .innerRadius(r )
-            .outerRadius(r- donutWidth);
-        var people = d3.nest()
-            .key(function(d) { return d.id; })
-            .entries(graph);
-        var svg = d3.select("body").selectAll("div")
-            .data(people)
-            .enter().append("div") 
-            .style("display", "inline-block")
-            .style("width", (r + m) * 2 + "px")
-            .style("height", (r + m) * 2 + "px")
-          .append("svg:svg")
-            .attr("width", (r + m) * 2)
-            .attr("height", (r + m) * 2)
-          .append("svg:g")
-            .attr("transform", "translate(" + (r + m) + "," + (r + m) + ")");
-      
-        svg.append("svg:text")
-            .attr("dy", ".35em")
-            .attr("text-anchor", "middle")
-            .text(function(d) { return d.key; });
-      
-        var g = svg.selectAll("g")
-            .data(function(d) { return pie(d.values[0].getVisitArray()); })
-            .enter().append("svg:g");
-      
-        g.append("svg:path")
-            .attr("d", arc)
-            .style("fill", function(d) { return z(d.data.placeType); })
-          .append("svg:title")
-            .text(function(d) { return d.data.place + ": " + d.data.placeID; });
-      
-        g.filter(function(d) { return d.endAngle - d.startAngle > .2; }).append("svg:text")
-            .attr("dy", ".35em")
-            .attr("text-anchor", "middle")
-            .attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")rotate(" + angle(d) + ")"; })
-            .text(function(d) { return d.data.placeType; });
-      
-        function angle(d) {
-          var a = (d.startAngle + d.endAngle) * 90 / Math.PI - 90;
-          return a > 90 ? a - 180 : a;
-        }
-      }
-
-      // Build the graph ID dropdown.
-      var list = document.getElementById("graphID");
-
-      for (var i = 0; i < inputParser.graphs.length; i++) {
-        var option = document.createElement("option");
-        option.text = i.toString();
-        option.value = i;
-
-        if (i == 0)
-          option.selected = true;
-
-        list.add(option);
-      }
-
-      // Change the graph being displayed when dropdown changes.
-      list.onchange = function() {
-        window.location.reload();
+        drawCharts(inputParser.graphs[document.getElementById("graphID").value], canvasSide);
       }
     </script>
 

@@ -51,6 +51,7 @@ Person.prototype.getVisitArray = function() {
 		entry = {};
 		entry.placeType = placeType;
 		entry.numVisits = this.visitMap[placeType];
+    entry.isOutlier = this.isOutlier;
 		visitArray.push(entry);
 	}
 
