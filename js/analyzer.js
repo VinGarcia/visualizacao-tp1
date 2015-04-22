@@ -5,9 +5,10 @@ if(exports) {
 	exports.Analyzer = Analyzer;
 }
 
-function Analyzer(graphs, side) {
+function Analyzer(graphs, side, DEBUG_MODE) {
   var self = this;
   self.graphs = graphs;
+	DEBUG_MODE = DEBUG_MODE || false;
 
 	if(!graphs || !side) {
 		console.log('Analyzer: Error graphs or side are undefined!');
@@ -35,7 +36,7 @@ function Analyzer(graphs, side) {
 	/* * * * * Private Functions: * * * * */
 
 	// When debuging set DEBUG_MODE=true before build.
-	if(typeof DEBUG_MODE==='boolean' && DEBUG_MODE===true) {
+	if(DEBUG_MODE===true) {
 		// Make the private functions public.
 		this.markOutliers = markOutliers;
 		this.generateCoordinates = generateCoordinates;
@@ -47,11 +48,14 @@ function Analyzer(graphs, side) {
 
 	/* * * * * Build Instance: * * * * */
 
-	// Initialize distMap
-	computeDistanceMap();
-	// Initialize self.distSumVector, self.outlierKeySet
-	computeOutliers();
-	computeCoordinates();
+	// Dont build automatically on DEBUG_MODE:
+	if(DEBUG_MODE === false) {
+		// Initialize distMap
+		computeDistanceMap();
+		// Initialize self.distSumVector, self.outlierKeySet
+		computeOutliers();
+		computeCoordinates();
+	}
 
 	/* * * * * Public Functions Declarations: * * * * */
 
