@@ -1,14 +1,36 @@
 function Analyzer(graphs, side) {
-  this.graphs = graphs;
   var self = this;
+
+	// Initialize distMap
+	computeDistanceMap();
+	// Initialize self.distSumVector, self.outlierKeySet
+	computeOutliers();
+  computeCoordinates();
+
+	/* * * * * Public Variables Declarations: * * * * */
+  self.graphs = graphs;
+
+	// Initialized on computeDistanceMap():
+  self.distMaps;
+  self.maxDistance;
+	
+	// Initialized on computeOutliers():
+	self.distSumVector;
+	self.outlierKeySet;
+
+	/* * * * * Public Functions Declarations: * * * * */
 
   // Computes a similarity map for the set of graphs. Each entry has another
   // map, with distances from the node to every other node in all graphs. Ex:
   //   {
   //     "1,3": {"3,4": 5, "4,2": 3},
-  //     "1,4": {"3,4": 6:, "8,6": 21}
+  //     "1,4": {"3,4": 6, "8,6": 21}
   //   }
-  this.computeDistanceMap = function() {
+	//
+	//   @input: self.graphs
+	//   @output: self.distMaps, self.maxDistance.
+  this.computeDistanceMap = computeDistanceMap;
+	function computeDistanceMap() {
     self.distMaps = {};
     self.maxDistance = 0;
 
@@ -34,23 +56,27 @@ function Analyzer(graphs, side) {
         }
       }
     }
-  }();
+  };
 
   // The outliers are defined as the nodes which are the farthest from all other
   // nodes. We defined the outliers to be the 10% nodes with highest sum of
   // distance to all other nodes.
-  this.computeOutliers = function() {
+	//
+	// @input: self.distMaps, 
+	// @output: self.distSumVector, self.outlierKeySet
+  this.computeOutliers = computeOutliers;
+  function computeOutliers() {
     self.distSumVector = [];
 
     // Computes a vector that, for each person, stores the sum of distances to
     // all other persons.
-    for (key in self.distMaps) {
+    for (var key in self.distMaps) {
        if (!self.distMaps.hasOwnProperty(key))
          continue;
 
        var sumDist = 0;
 
-       for (innerKey in self.distMaps[key]) {
+       for (var innerKey in self.distMaps[key]) {
          if (!self.distMaps[key].hasOwnProperty(innerKey))
            continue;
 
@@ -70,17 +96,19 @@ function Analyzer(graphs, side) {
     // Build a set with the keys of all outlier nodes.
     for (var i = threshold; i < self.distSumVector.length; i++)
       self.outlierKeySet.add(self.distSumVector[i].key);
-  }();
+  };
 
   // Returns a random integer between min and max.
-  this.getRand = function(min, max) {
+  this.getRand = getRand;
+  function getRand(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
   // Checks if a given coordinate is far enough from other points (as the radius
   // of common charts is 20% of the side, the minimum distance between centers
   // is 22% of side).
-  this.isCoordAlowed = function(coord, coordsVector) {
+  this.isCoordAlowed = isCoordAlowed;
+	function isCoordAlowed(coord, coordsVector) {
     for (var i = 0; i < coordsVector.length; i++) {
       var dist = Math.sqrt(Math.pow((coord[0] - coordsVector[i][0]), 2) +
                            Math.pow((coord[1] - coordsVector[i][1]), 2));
@@ -98,7 +126,8 @@ function Analyzer(graphs, side) {
   // assigned. For the remaining charts, coordinates are based on the similarity
   // to nodes of previous charts. Outliers will always be plotted at the bottom
   // (13%) of the canvas.
-  this.computeCoordinates = function() {
+  this.computeCoordinates = computeCoordinates;
+  function computeCoordinates() {
 		// Generate the coordinates for the first graph:
 		var baseCoordinates = generateCoordinates(graphs[0]);
 
@@ -150,7 +179,7 @@ function Analyzer(graphs, side) {
 			// Allocate the outliers equaly spaced on the bottom of the screen:
 			allocateOutliers(side, outliers);
 		}
-	}();
+	};
 
 	/* * * * * Private Functions Declarations: * * * * */
 
@@ -275,7 +304,7 @@ function Analyzer(graphs, side) {
 		var personKey = person.getKey();
 		var mostSimilar = { 'person_index': null, 'similarity': null, 'person':null }
 
-		for(int i=0; i < graph.length; i++) {
+		for(var i=0; i < graph.length; i++) {
 
 			// If there is nothing on graph[i]:
 			if(graph.hasOwnProperty(i) === false) continue;
