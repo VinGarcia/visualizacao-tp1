@@ -18,6 +18,27 @@ function Analyzer(graphs, side) {
 	self.distSumVector;
 	self.outlierKeySet;
 
+	/* * * * * Public Functions: * * * * */
+
+  this.computeDistanceMap = computeDistanceMap;
+  this.computeOutliers = computeOutliers;
+  this.getRand = getRand;
+  this.isCoordAlowed = isCoordAlowed;
+  this.computeCoordinates = computeCoordinates;
+
+	/* * * * * Private Functions: * * * * */
+
+	// When debuging set DEBUG_MODE=true before calling this constructor.
+	if(DEBUG_MODE===true) {
+		// Make the private functions public.
+		this.markOutliers = markOutliers;
+		this.generateCoordinates = generateCoordinates;
+		this.allocateOutliers = allocateOutliers;
+		this.getMostSimilarPair = getMostSimilarPair;
+		this.getMostSimilar = getMostSimilar;
+		this.copyVector = copyVector;
+	}
+
 	/* * * * * Public Functions Declarations: * * * * */
 
   // Computes a similarity map for the set of graphs. Each entry has another
@@ -29,7 +50,6 @@ function Analyzer(graphs, side) {
 	//
 	//   @input: self.graphs
 	//   @output: self.distMaps, self.maxDistance.
-  this.computeDistanceMap = computeDistanceMap;
 	function computeDistanceMap() {
     self.distMaps = {};
     self.maxDistance = 0;
@@ -64,7 +84,6 @@ function Analyzer(graphs, side) {
 	//
 	// @input: self.distMaps, 
 	// @output: self.distSumVector, self.outlierKeySet
-  this.computeOutliers = computeOutliers;
   function computeOutliers() {
     self.distSumVector = [];
 
@@ -99,7 +118,6 @@ function Analyzer(graphs, side) {
   };
 
   // Returns a random integer between min and max.
-  this.getRand = getRand;
   function getRand(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
@@ -107,7 +125,6 @@ function Analyzer(graphs, side) {
   // Checks if a given coordinate is far enough from other points (as the radius
   // of common charts is 20% of the side, the minimum distance between centers
   // is 22% of side).
-  this.isCoordAlowed = isCoordAlowed;
 	function isCoordAlowed(coord, coordsVector) {
     for (var i = 0; i < coordsVector.length; i++) {
       var dist = Math.sqrt(Math.pow((coord[0] - coordsVector[i][0]), 2) +
@@ -126,7 +143,6 @@ function Analyzer(graphs, side) {
   // assigned. For the remaining charts, coordinates are based on the similarity
   // to nodes of previous charts. Outliers will always be plotted at the bottom
   // (13%) of the canvas.
-  this.computeCoordinates = computeCoordinates;
   function computeCoordinates() {
 		// Generate the coordinates for the first graph:
 		var baseCoordinates = generateCoordinates(graphs[0]);
