@@ -1,14 +1,20 @@
+
+// If nodejs is being used:
+if(exports) {
+	// Prepare the hook for nodejs require():
+	exports.Analyzer = Analyzer;
+}
+
 function Analyzer(graphs, side) {
   var self = this;
+  self.graphs = graphs;
 
-	// Initialize distMap
-	computeDistanceMap();
-	// Initialize self.distSumVector, self.outlierKeySet
-	computeOutliers();
-  computeCoordinates();
+	if(!graphs || !side) {
+		console.log('Analyzer: Error graphs or side are undefined!');
+	}
 
 	/* * * * * Public Variables Declarations: * * * * */
-  self.graphs = graphs;
+  self.graphs;
 
 	// Initialized on computeDistanceMap():
   self.distMaps;
@@ -28,7 +34,7 @@ function Analyzer(graphs, side) {
 
 	/* * * * * Private Functions: * * * * */
 
-	// When debuging set DEBUG_MODE=true before calling this constructor.
+	// When debuging set DEBUG_MODE=true before build.
 	if(DEBUG_MODE===true) {
 		// Make the private functions public.
 		this.markOutliers = markOutliers;
@@ -38,6 +44,14 @@ function Analyzer(graphs, side) {
 		this.getMostSimilar = getMostSimilar;
 		this.copyVector = copyVector;
 	}
+
+	/* * * * * Build Instance: * * * * */
+
+	// Initialize distMap
+	computeDistanceMap();
+	// Initialize self.distSumVector, self.outlierKeySet
+	computeOutliers();
+	computeCoordinates();
 
 	/* * * * * Public Functions Declarations: * * * * */
 
@@ -143,6 +157,9 @@ function Analyzer(graphs, side) {
   // assigned. For the remaining charts, coordinates are based on the similarity
   // to nodes of previous charts. Outliers will always be plotted at the bottom
   // (13%) of the canvas.
+	//
+	// @input: self.graphs
+	// @output: self.graphs with coords added to each Person.
   function computeCoordinates() {
 		// Generate the coordinates for the first graph:
 		var baseCoordinates = generateCoordinates(graphs[0]);
@@ -266,7 +283,7 @@ function Analyzer(graphs, side) {
 
 	function allocateOutliers(side, outliers) {
 		for (var j = 0; j < outliers.length; j++) {
-			outliers[j].x = (side/outliers.length) * (i+1);
+			outliers[j].x = (side/outliers.length) * (j+1);
 			outliers[j].y = (side*0.87);
 		}
 		return outliers;
