@@ -55,15 +55,25 @@ function drawCharts(graph, graphID, canvasSide) {
       .attr("transform", "translate(" + radius + "," + radius + ")");
 
   // Create a base SVG to hold all edges.
-  var lineSVG = mainDiv.append("svg")
-      .attr("width", canvasSide)
+  var baseSVG = mainDiv.append("svg")
+      .attr("width", Math.ceil(canvasSide*1.5))
       .attr("height", canvasSide);
+
+  var canvasRadius = Math.ceil(canvasSide/2);
+
+  // Draw the circular plotting frontier in the canvas.
+  baseSVG.append("circle")
+      .attr("cx", canvasRadius)
+      .attr("cy", canvasRadius)
+      .attr("r", canvasRadius)
+      .style("stroke", "black")
+      .style("fill", "none");
 
   // Draw one edge for each chart.
   for (var i = 0; i < analyzer.edgeVector[graphID].length; i++) {
     var edge = analyzer.edgeVector[graphID][i];
 
-    lineSVG.append("line")
+    baseSVG.append("line")
       .attr("x1", edge.x1)
       .attr("y1", edge.y1)
       .attr("x2", edge.x2)

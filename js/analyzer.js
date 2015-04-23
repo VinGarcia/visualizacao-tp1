@@ -142,12 +142,20 @@ function Analyzer(graphs, side, DEBUG_MODE) {
   }
 
   // Checks if a given coordinate is far enough from other points (as the radius
-  // of common charts is 15% of the side, the minimum distance between centers
-  // is 17% of side).
+  // of common charts is 10% of the side, the minimum distance between centers
+  // is 22% of side). Also, the coordinate must be in the circular area over the canvas.
   function isCoordAllowed(coord, coordsVector, radius) {
 		radius = radius || 0.11
 
     for (var i = 0; i < coordsVector.length; i++) {
+      var center = [Math.ceil(side/2), Math.ceil(side/2)];
+      var distCenter = Math.sqrt(Math.pow((coord[0] - center[0]), 2) +
+                                 Math.pow((coord[1] - center[1]), 2));
+  
+      // Checks that the point is within the circular canvas.
+      if (distCenter > (side/2 * 0.8))
+        return false;
+
       var dist = Math.sqrt(
         Math.pow((coord[0] - coordsVector[i][0]), 2) +
         Math.pow((coord[1] - coordsVector[i][1]), 2)
@@ -328,20 +336,18 @@ function Analyzer(graphs, side, DEBUG_MODE) {
   // @input: side, coordsVector
   // @output: [x,y] coordinates.
   function generateSafeCoordinates(side, coordsVector) {
-
-    // 25% of the screen is kept for outliers.
     var coord = [
       self.getRand(side*0.12, side*0.88),
-      self.getRand(side*0.12, side*0.65)
+      self.getRand(side*0.12, side*0.88)
     ];
-    var maxIterations = 1000;
+    var maxIterations = 99999;
 		var radius = 0.11;
 
     // Compute new random coordinates until we find a valid one.
     while (!self.isCoordAllowed(coord, coordsVector, radius)) {
       coord = [
         self.getRand(side*0.12, side*0.88),
-        self.getRand(side*0.12, side*0.65)
+        self.getRand(side*0.12, side*0.88)
       ];
       if(maxIterations-- === 0) {
 				maxIterations = 100;
@@ -354,7 +360,9 @@ function Analyzer(graphs, side, DEBUG_MODE) {
 
   function allocateOutliers(side, outliers) {
     for (var j = 0; j < outliers.length; j++) {
-      outliers[j].x = (side/(outliers.length + 1)) * (j+1);
+      var offset = Math.ceil(side*0.9);
+      outliers[j].x = (Math.ceil(side*0.5)/(outliers.length + 1)) * (j+1);
+      outliers[j].x += offset;
       outliers[j].y = (side*0.87);
     }
     return outliers;
