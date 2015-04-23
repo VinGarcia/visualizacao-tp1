@@ -1,7 +1,7 @@
 // Plot all charts on the screen.
 function drawCharts(graph, graphID, canvasSide) {
   // Clean old charts before drawing again.
-  d3.select("div").remove();
+  d3.selectAll("div").remove();
 
   // Data source definition.
   var people = d3.nest()

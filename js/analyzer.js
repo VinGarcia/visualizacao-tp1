@@ -145,7 +145,7 @@ function Analyzer(graphs, side, DEBUG_MODE) {
   // of common charts is 15% of the side, the minimum distance between centers
   // is 17% of side).
   function isCoordAllowed(coord, coordsVector, radius) {
-		radius = radius || 0.17
+		radius = radius || 0.11
 
     for (var i = 0; i < coordsVector.length; i++) {
       var dist = Math.sqrt(
@@ -153,7 +153,7 @@ function Analyzer(graphs, side, DEBUG_MODE) {
         Math.pow((coord[1] - coordsVector[i][1]), 2)
       );
 
-      if (dist < side*radius)
+      if (dist < (side * (2*radius)))
         return false;
     }
 
@@ -175,6 +175,7 @@ function Analyzer(graphs, side, DEBUG_MODE) {
 
     // For each other graph:
     for(var i=1; i < graphs.length; i++) {
+      var currentCoordinates = [];
       //console.log('aqui! i: ', i);
 
       // Separate commonPeople from outliers:
@@ -201,6 +202,7 @@ function Analyzer(graphs, side, DEBUG_MODE) {
         var p2 = commonPeopleBase[ mostSimilarPair.p2_index ];
         p1.x = p2.x;
         p1.y = p2.y;
+        currentCoordinates.push([p1.x, p1.y]);
 
         // Remove the pair from both lists:
         delete commonPeople[ mostSimilarPair.p1_index ];
@@ -212,7 +214,7 @@ function Analyzer(graphs, side, DEBUG_MODE) {
       // For each remaining people with no coordinates:
       for(var j=0; j < commonPeople.length; j++) {
         if(commonPeople.hasOwnProperty(j) === false) continue;
-        var coord = generateSafeCoordinates(side, baseCoordinates.coordsVector);
+        var coord = generateSafeCoordinates(side, currentCoordinates);
         // TODO: This coordinates are random and have no similarity meaning.
         // Maybe we should add the left over Persons to the baseCoordinates list:
         // baseCoordinates.commonPeople.push(commonPeople[i]);
@@ -220,6 +222,7 @@ function Analyzer(graphs, side, DEBUG_MODE) {
         // This way the next iterations will use this Person as a reference.
         commonPeople[j].x = coord[0];
         commonPeople[j].y = coord[1];
+        currentCoordinates.push([coord[0], coord[1]]);
       }
 
       // Allocate the outliers equaly spaced on the bottom of the screen:
@@ -332,7 +335,7 @@ function Analyzer(graphs, side, DEBUG_MODE) {
       self.getRand(side*0.12, side*0.65)
     ];
     var maxIterations = 1000;
-		var radius = 0.17;
+		var radius = 0.11;
 
     // Compute new random coordinates until we find a valid one.
     while (!self.isCoordAllowed(coord, coordsVector, radius)) {
@@ -351,7 +354,7 @@ function Analyzer(graphs, side, DEBUG_MODE) {
 
   function allocateOutliers(side, outliers) {
     for (var j = 0; j < outliers.length; j++) {
-      outliers[j].x = (side/outliers.length) * (j+1);
+      outliers[j].x = (side/(outliers.length + 1)) * (j+1);
       outliers[j].y = (side*0.87);
     }
     return outliers;
