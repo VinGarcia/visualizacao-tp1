@@ -64,9 +64,18 @@ Person.prototype.simEuclidean = function(person) {
 // object/entry has the place type and number of visits. This is mainly used to
 // conform with D3's data layout.
 Person.prototype.getVisitArray = function() {
-
 	var visitArray = [];
+  var totalVisits = 0;
 
+  // Compute the total number of visits for this person.
+	for (var placeType in this.visitMap) {
+		if (!this.visitMap.hasOwnProperty(placeType))
+			continue;
+
+    totalVisits += this.visitMap[placeType];
+  }
+
+  // Build vector with collapsed number of visits.
 	for (var placeType in this.visitMap) {
 		if (!this.visitMap.hasOwnProperty(placeType))
 			continue;
@@ -74,12 +83,12 @@ Person.prototype.getVisitArray = function() {
 		entry = {};
 		entry.placeType = placeType;
 		entry.numVisits = this.visitMap[placeType];
+    entry.percentage = Math.round((this.visitMap[placeType] / totalVisits) * 100);
     entry.isOutlier = this.isOutlier;
 		visitArray.push(entry);
 	}
 
 	return visitArray;
-
 };
 
 // Returns a key commposed by the graph ID and the person ID in the graph:

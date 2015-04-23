@@ -86,10 +86,30 @@ function drawCharts(graph, graphID, canvasSide) {
       .attr("text-anchor", "middle")
       .text(function(d) { return d.key; });
 
+  // Tooltip text box.
+  var tooltipDiv = d3.select("body").append("div")
+      .attr("class", "tooltip")
+      .style("opacity", 0);
+
   // Fill each chart with data.
   var g = svg.selectAll("g")
       .data(function(d) { return pie(d.values[0].getVisitArray()); })
-      .enter().append("svg:g");
+      .enter().append("svg:g")
+      // Sets the tooltip content for this arc.
+      .on("mouseover", function(d) {
+          tooltipDiv.transition()
+          .duration(200)
+          .style("opacity", .95);
+          tooltipDiv.html("Número de visitas: " + d.data.numVisits +
+                          "</br>Percentual: " + d.data.percentage + "%")
+          .style("left", (d3.event.pageX) + "px")
+          .style("top", (d3.event.pageY - 28) + "px");
+      })
+      .on("mouseout", function(d) {
+          tooltipDiv.transition()
+              .duration(200)
+              .style("opacity", 0);
+      });
 
   var z = d3.scale.category20c();
 
