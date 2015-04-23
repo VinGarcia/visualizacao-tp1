@@ -293,6 +293,7 @@ function Analyzer(graphs, side, DEBUG_MODE) {
           edge.x2 = person2.x;
           edge.y2 = person2.y;
           edge.percentMatch = matchData.percentMatch;
+          edge.label = matchData.label;
           graphEdges.push(edge);
         }
       }
