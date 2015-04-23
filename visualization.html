@@ -28,22 +28,58 @@
         border-radius: 2px;           
         pointer-events: none;         
       }
+
+      input.graphid {
+        width: 25px;
+        height: 16px;
+        -moz-appearance: textfield;
+        text-align: center;
+      }
+
+      button.ctrlbutton {
+        height: 25px;
+      }
     </style>
   </head>
   <body>
-    <select id="graphID" style="vertical-align:top"/>
+
+    <table>
+      <tr>
+        <td>
+          <font face="verdana" size="4">Grafo:</font>
+        </td>
+        <td>
+          <button type="button" id="stepdown" class="ctrlbutton">&lt;</button>
+        </td>
+        <td>
+          <input type="number" id="graphID" class="graphid" min="0" step="1" value="0"/>
+        </td>
+        <td>
+          <button type="button" id="stepup" class="ctrlbutton">&gt;</button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <font face="verdana" size="4">Threshold - aresta (%):</font>
+        </td>
+        <td>
+          <button type="button" id="stepdown_thr" class="ctrlbutton">&lt;</button>
+        </td>
+        <td>
+          <input type="number" id="edgeThreshold" class="graphid" min="0" max="100" step="5" value="50"/>
+        </td>
+        <td>
+          <button type="button" id="stepup_thr" class="ctrlbutton">&gt;</button>
+        </td>
+      </tr>
+    </table>
 
     <script type="text/javascript">
       canvasSide = 750;
       inputParser.initialize(rawData);
       analyzer = new Analyzer(inputParser.graphs, canvasSide);
 
-      buildGraphDropdown();
-
-      window.onload = function() {
-        drawCharts(inputParser.graphs[document.getElementById("graphID").value],
-                   document.getElementById("graphID").value, canvasSide);
-      }
+      buildGraphinput();
     </script>
 
   </body>

@@ -28,15 +28,10 @@ Person.prototype.add = function(place,id) {
 	this.placeIDs.push(id)
 }
 
-// Tests if two people go to at least one place with same type and ID. These is
-// used to draw edges. An offset in the number of visits is used to determine
-// if an edge will be drawn.
+// Tests how many times two people go to a place with same type and ID. These is
+// used to draw edges.
 Person.prototype.goesToSamePlace = function(person) {
   var matchCount = 0;
-
-  // The offset is 50% of visits to the same place, taking as base the person
-  // with the highest number of visits.
-  var offset = Math.max(this.placeTypes.length, person.placeTypes.length) * 0.5;
 
   for (var i = 0; i < this.placeTypes.length; i++)
     for (var j = 0; j < person.placeTypes.length; j++)
@@ -44,11 +39,13 @@ Person.prototype.goesToSamePlace = function(person) {
           (this.placeIDs[i] == person.placeIDs[j]))
         matchCount++;
 
-  // Checks if the minimun offset was reached.
-  if (matchCount >= offset)
-    return true;
+  var percentMatch = (matchCount / Math.max(this.placeTypes.length,
+                                            person.placeTypes.length));
 
-  return false;
+  var ret = {};
+  ret.percentMatch = percentMatch;
+
+  return ret;
 }
 
 // Similarity metric: euclidean

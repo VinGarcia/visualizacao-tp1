@@ -57,7 +57,8 @@ function drawCharts(graph, graphID, canvasSide) {
   // Create a base SVG to hold all edges.
   var baseSVG = mainDiv.append("svg")
       .attr("width", Math.ceil(canvasSide*1.5))
-      .attr("height", canvasSide);
+      .attr("height", canvasSide)
+      .attr("id", "baseSVG");
 
   var canvasRadius = Math.ceil(canvasSide/2);
 
@@ -65,22 +66,11 @@ function drawCharts(graph, graphID, canvasSide) {
   baseSVG.append("circle")
       .attr("cx", canvasRadius)
       .attr("cy", canvasRadius)
-      .attr("r", canvasRadius)
+      .attr("r", canvasRadius-1)
       .style("stroke", "black")
       .style("fill", "none");
 
-  // Draw one edge for each chart.
-  for (var i = 0; i < analyzer.edgeVector[graphID].length; i++) {
-    var edge = analyzer.edgeVector[graphID][i];
-
-    baseSVG.append("line")
-      .attr("x1", edge.x1)
-      .attr("y1", edge.y1)
-      .attr("x2", edge.x2)
-      .attr("y2", edge.y2)
-      .attr("stroke-width", 2)
-      .attr("stroke", "black");
-  }
+  redrawEdges(graphID);
 
   // Prevent edged from overlapping the person ID by inserting a white circle
   // over it.
@@ -143,25 +133,78 @@ function drawCharts(graph, graphID, canvasSide) {
   }
 }
 
-// Builds a dropdown with graph IDs, so the user can select which graph to
-// display.
-function buildGraphDropdown() {
-  var list = document.getElementById("graphID");
+function redrawEdges(graphID) {
+  var edgeThreshold = document.getElementById("edgeThreshold").value / 100;
+  var baseSVG = d3.select("#baseSVG");
 
-  for (var i = 0; i < inputParser.graphs.length; i++) {
-    var option = document.createElement("option");
-    option.text = i.toString();
-    option.value = i;
+  // Remove old edges before redrawing.
+  d3.selectAll("line").remove();
 
-    if (i == 0)
-      option.selected = true;
+  // Draw one edge for each chart.
+  for (var i = 0; i < analyzer.edgeVector[graphID].length; i++) {
+    var edge = analyzer.edgeVector[graphID][i];
 
-    list.add(option);
+    // Ignore edges bellow the threshold.
+    if (edge.percentMatch < edgeThreshold)
+      continue;
+
+    baseSVG.append("line")
+      .attr("x1", edge.x1)
+      .attr("y1", edge.y1)
+      .attr("x2", edge.x2)
+      .attr("y2", edge.y2)
+      .attr("stroke-width", 2)
+      .attr("stroke", "black");
   }
+}
 
-  // Change the graph being displayed when dropdown changes.
-  list.onchange = function() {
+// Set the range and behavior of the graph ID input and its controls. Also, set
+// the threshold edge input.
+function buildGraphinput() {
+  var input = document.getElementById("graphID");
+
+  // Set the selection range.
+  document.getElementById("graphID").
+    setAttribute("max", (inputParser.graphs.length -1).toString());
+
+  // Display first graph when loaded.
+  window.onload = function() {
     drawCharts(inputParser.graphs[document.getElementById("graphID").value],
                document.getElementById("graphID").value, canvasSide);
   }
+
+  // Change the graph being displayed when input changes.
+  input.onchange = function() {
+    drawCharts(inputParser.graphs[document.getElementById("graphID").value],
+               document.getElementById("graphID").value, canvasSide);
+  }
+
+  // Set controls.
+  var sd = document.getElementById("stepdown").onclick = function() {
+    input.stepDown(1);
+    input.onchange();
+  };
+
+  var sd = document.getElementById("stepup").onclick = function() {
+    input.stepUp(1);
+    input.onchange();
+  };
+
+  // Set edge threshold input.
+  var edgeThInput = document.getElementById("edgeThreshold");
+
+  edgeThInput.onchange = function() {
+    redrawEdges(document.getElementById("graphID").value);
+  };
+
+  // Set controls.
+  var sd = document.getElementById("stepdown_thr").onclick = function() {
+    edgeThInput.stepDown(1);
+    edgeThInput.onchange();
+  };
+
+  var sd = document.getElementById("stepup_thr").onclick = function() {
+    edgeThInput.stepUp(1);
+    edgeThInput.onchange();
+  };
 }

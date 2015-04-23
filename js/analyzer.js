@@ -147,15 +147,15 @@ function Analyzer(graphs, side, DEBUG_MODE) {
   function isCoordAllowed(coord, coordsVector, radius) {
 		radius = radius || 0.11
 
-    for (var i = 0; i < coordsVector.length; i++) {
-      var center = [Math.ceil(side/2), Math.ceil(side/2)];
-      var distCenter = Math.sqrt(Math.pow((coord[0] - center[0]), 2) +
-                                 Math.pow((coord[1] - center[1]), 2));
-  
-      // Checks that the point is within the circular canvas.
-      if (distCenter > (side/2 * 0.8))
-        return false;
+    var center = [Math.ceil(side/2), Math.ceil(side/2)];
+    var distCenter = Math.sqrt(Math.pow((coord[0] - center[0]), 2) +
+                               Math.pow((coord[1] - center[1]), 2));
 
+    // Checks that the point is within the circular canvas.
+    if (distCenter > (side/2 * 0.8))
+      return false;
+
+    for (var i = 0; i < coordsVector.length; i++) {
       var dist = Math.sqrt(
         Math.pow((coord[0] - coordsVector[i][0]), 2) +
         Math.pow((coord[1] - coordsVector[i][1]), 2)
@@ -286,15 +286,14 @@ function Analyzer(graphs, side, DEBUG_MODE) {
           var person1 = self.graphs[i][j];
           var person2 = self.graphs[i][k];
 
-          // If they go to the same place, create an edge.
-          if (person1.goesToSamePlace(person2)) {
-            var edge = {};
-            edge.x1 = person1.x;
-            edge.y1 = person1.y;
-            edge.x2 = person2.x;
-            edge.y2 = person2.y;
-            graphEdges.push(edge);
-          }
+          var matchData = person1.goesToSamePlace(person2);
+          var edge = {};
+          edge.x1 = person1.x;
+          edge.y1 = person1.y;
+          edge.x2 = person2.x;
+          edge.y2 = person2.y;
+          edge.percentMatch = matchData.percentMatch;
+          graphEdges.push(edge);
         }
       }
 
@@ -340,7 +339,7 @@ function Analyzer(graphs, side, DEBUG_MODE) {
       self.getRand(side*0.12, side*0.88),
       self.getRand(side*0.12, side*0.88)
     ];
-    var maxIterations = 99999;
+    var maxIterations = 999999;
 		var radius = 0.11;
 
     // Compute new random coordinates until we find a valid one.
