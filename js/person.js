@@ -1,3 +1,9 @@
+// If nodejs is being used:
+if(typeof exports !== 'undefined') {
+	// Prepare the hook for nodejs require():
+	exports.Person = Person;
+}
+
 // Person data type
 function Person(gid, id) {
 

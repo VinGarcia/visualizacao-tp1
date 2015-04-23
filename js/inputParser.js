@@ -2,6 +2,13 @@
 // Also offers a set of processing routines.
 var inputParser = {};
 
+// If nodejs is being used:
+if(typeof exports !== 'undefined') {
+	// Prepare the hook for nodejs require():
+	exports.inputParser = inputParser;
+	Person = require('./person.js').Person;
+}
+
 inputParser.initialize = function(rawData) {
 	this.graphs = [];
 	this.gPersonList = [];
