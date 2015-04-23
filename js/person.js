@@ -1,5 +1,5 @@
 // If nodejs is being used:
-if(exports) {
+if(typeof exports !== 'undefined') {
 	// Prepare the hook for nodejs require():
 	exports.Person = Person;
 }

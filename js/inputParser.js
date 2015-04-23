@@ -3,7 +3,7 @@
 var inputParser = {};
 
 // If nodejs is being used:
-if(exports) {
+if(typeof exports !== 'undefined') {
 	// Prepare the hook for nodejs require():
 	exports.inputParser = inputParser;
 	Person = require('./person.js').Person;
