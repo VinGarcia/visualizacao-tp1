@@ -1,0 +1,99 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex)
+ \write18 enabled.
+entering extended mode
+(./doc.tex
+LaTeX2e <2014/05/01>
+Babel <3.9k> and hyphenation patterns for 78 languages loaded.
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/size12.clo))
+(/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amsmath.sty
+For additional information on amsmath, use the `?' option.
+(/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amstext.sty
+(/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amsgen.sty))
+(/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amsbsy.sty)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amsopn.sty))
+(/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/amssymb.sty
+(/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/amsfonts.sty))
+(/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/graphicx.sty
+(/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/keyval.sty)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/graphics.sty
+(/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/trig.sty)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/latexconfig/graphics.cfg)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/pdftex-def/pdftex.def
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/infwarerr.sty)
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/ltxcmds.sty))))
+(./sbc-template.sty
+(/usr/local/texlive/2014/texmf-dist/tex/latex/geometry/geometry.sty
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/ifpdf.sty)
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/ifvtex.sty)
+(/usr/local/texlive/2014/texmf-dist/tex/generic/ifxetex/ifxetex.sty))
+(/usr/local/texlive/2014/texmf-dist/tex/latex/caption/caption2.sty
+
+Package caption2 Warning: ****************************************************
+(caption2)                THIS PACKAGE IS OBSOLETE:
+(caption2)                This package attempts to provide an `caption2'
+(caption2)                package v2.0/2.1 author environment so that OLD
+(caption2)                documents can be successfully processed. It should
+(caption2)                NOT be used for NEW documents! New documents should
+(caption2)                use the regular `caption' package v3.x instead.
+(caption2)                ****************************************************
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/caption/caption3.sty))
+(/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/times.sty)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/titlesec/titlesec.sty))
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/inputenc.sty
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/utf8.def
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/t1enc.dfu)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/ot1enc.dfu)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/omsenc.dfu)))
+(/usr/local/texlive/2014/texmf-dist/tex/latex/hyperref/hyperref.sty
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/hobsub-hyperref.sty
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/hobsub-generic.sty))
+(/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/auxhook.sty)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/kvoptions.sty)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/hyperref/pd1enc.def)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/latexconfig/hyperref.cfg)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/url/url.sty))
+
+Package hyperref Message: Driver: hpdftex.
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/hyperref/hpdftex.def
+(/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty))
+(/usr/local/texlive/2014/texmf-dist/tex/generic/babel/babel.sty
+(/usr/local/texlive/2014/texmf-dist/tex/generic/babel-portuges/portuges.ldf
+(/usr/local/texlive/2014/texmf-dist/tex/generic/babel/babel.def)))
+(/usr/local/texlive/2014/texmf-dist/tex/latex/algorithm2e/algorithm2e.sty
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/ifthen.sty)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/tools/xspace.sty)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/relsize/relsize.sty)
+********************************************************
+Package `algorithm2e' Release 5.0 -- january 06 2013 --
+- algorithm2e-announce@lirmm.fr mailing list for announcement about releases
+- algorithm2e-discussion@lirmm.fr mailing list for discussion about package
+subscribe by emailing sympa@lirmm.fr with 'subscribe <list> <firstname name>'
+- Author: Christophe Fiorio (cfiorio@um2.fr)
+********************************************************
+) (./doc.aux) (/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/ot1ptm.fd)
+(/usr/local/texlive/2014/texmf-dist/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+) (/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+(/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/grfext.sty)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg))
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+(/usr/local/texlive/2014/texmf-dist/tex/latex/hyperref/nameref.sty
+(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/gettitlestring.sty))
+(./doc.out) (./doc.out)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/umsa.fd)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/umsb.fd)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/psnfss/ot1pcr.fd) [1{/usr/local/t
+exlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] (./doc.aux) ){/u
+sr/local/texlive/2014/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/texliv
+e/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/
+2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/201
+4/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2014/texmf-
+dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts
+/type1/urw/times/utmr8a.pfb>
+Output written on doc.pdf (2 pages, 56180 bytes).
+Transcript written on doc.log.
