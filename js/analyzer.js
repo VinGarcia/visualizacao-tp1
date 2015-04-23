@@ -142,6 +142,38 @@ function Analyzer(graphs, side) {
     }
   }();
 
+  // Computes the coordinates of the edges needed for each graph. Edges are
+  // traced from the center of each chart. The vector will contain one entry per
+  // chart. Each entry is also a vactor, with edge objects, containing the
+  // coordinates.
+  this.buildEdgeSet = function() {
+    self.edgeVector = [];
+
+    for (var i = 0; i < self.graphs.length; i++) {
+      var graphEdges = [];
+
+      // Compare each par of people in this chart.
+      for (var j = 0; j < self.graphs[i].length; j++) {
+        for (var k = j+1; k < self.graphs[i].length; k++) {
+          var person1 = self.graphs[i][j];
+          var person2 = self.graphs[i][k];
+
+          // If they go to the same place, create an edge.
+          if (person1.goesToSamePlace(person2)) {
+            var edge = {};
+            edge.x1 = person1.x;
+            edge.y1 = person1.y;
+            edge.x2 = person2.x;
+            edge.y2 = person2.y;
+            graphEdges.push(edge);
+          }
+        }
+      }
+
+      self.edgeVector.push(graphEdges);
+    }
+  }();
+
   return;
 }
 

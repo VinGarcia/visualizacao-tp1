@@ -1,5 +1,5 @@
 // Plot all charts on the screen.
-function drawCharts(graph, canvasSide) {
+function drawCharts(graph, graphID, canvasSide) {
   // Clean old charts before drawing again.
   d3.select("div").remove();
 
@@ -26,9 +26,8 @@ function drawCharts(graph, canvasSide) {
          return ((d.data.isOutlier) ? outlierRadius : radius) - donutWidth ;
       });
 
-  // Draw all charts.
-  var svg = d3.select("body")
-      // Add a canvas to the center of the page.
+  // Add a canvas to the center of the page.
+  var mainDiv = d3.select("body")
       .append("div")
       .style("position", "absolute")
       .style("top", "0")
@@ -36,8 +35,10 @@ function drawCharts(graph, canvasSide) {
       .style("right", "0")
       .style("margin", "auto")
       .style("width", canvasSide + "px")
-      .style("height", canvasSide + "px")
-      // Add one div per chart, setting its coordinates.
+      .style("height", canvasSide + "px");
+
+  // Add one div per chart, setting its coordinates.
+  var svg = mainDiv
       .selectAll("div")
       .data(people)
       .enter().append("div") 
@@ -52,6 +53,32 @@ function drawCharts(graph, canvasSide) {
       .attr("height", radius * 2)
       .append("svg:g")
       .attr("transform", "translate(" + radius + "," + radius + ")");
+
+  // Create a base SVG to hold all edges.
+  var lineSVG = mainDiv.append("svg")
+      .attr("width", canvasSide)
+      .attr("height", canvasSide);
+
+  // Draw one edge for each chart.
+  for (var i = 0; i < analyzer.edgeVector[graphID].length; i++) {
+    var edge = analyzer.edgeVector[graphID][i];
+
+    lineSVG.append("line")
+      .attr("x1", edge.x1)
+      .attr("y1", edge.y1)
+      .attr("x2", edge.x2)
+      .attr("y2", edge.y2)
+      .attr("stroke-width", 2)
+      .attr("stroke", "black");
+  }
+
+  // Prevent edged from overlapping the person ID by inserting a white circle
+  // over it.
+  svg.append("circle")
+      .attr("cx", 0)
+      .attr("cy", 0)
+      .attr("r", 10)
+      .attr("fill", "white");
 
   // Put the person ID at the center of the chart.
   svg.append("svg:text")
@@ -104,6 +131,7 @@ function buildGraphDropdown() {
 
   // Change the graph being displayed when dropdown changes.
   list.onchange = function() {
-    drawCharts(inputParser.graphs[document.getElementById("graphID").value], canvasSide);
+    drawCharts(inputParser.graphs[document.getElementById("graphID").value],
+               document.getElementById("graphID").value, canvasSide);
   }
 }

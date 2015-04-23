@@ -27,7 +27,8 @@
       buildGraphDropdown();
 
       window.onload = function() {
-        drawCharts(inputParser.graphs[document.getElementById("graphID").value], canvasSide);
+        drawCharts(inputParser.graphs[document.getElementById("graphID").value],
+                   document.getElementById("graphID").value, canvasSide);
       }
     </script>
 
