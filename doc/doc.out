@@ -2,6 +2,11 @@
 \BOOKMARK [1][-]{section.2}{Padr\365es em Comunidades}{}% 2
 \BOOKMARK [2][-]{subsection.2.1}{Donut Graphs}{section.2}% 3
 \BOOKMARK [2][-]{subsection.2.2}{Posicionamento e Arestas}{section.2}% 4
-\BOOKMARK [1][-]{section.3}{Detalhes de Implementa\347\343o}{}% 5
-\BOOKMARK [1][-]{section.4}{Padr\365es Encontrados}{}% 6
-\BOOKMARK [1][-]{section.5}{Conclus\343o}{}% 7
+\BOOKMARK [2][-]{subsection.2.3}{* Heatmap}{section.2}% 5
+\BOOKMARK [1][-]{section.3}{Desafios e Detalhes de Implementa\347\343o}{}% 6
+\BOOKMARK [2][-]{subsection.3.1}{Posicionamento de indiv\355duos nos gr\341ficos de tipo Donut}{section.3}% 7
+\BOOKMARK [2][-]{subsection.3.2}{Detec\347\343o de outliers}{section.3}% 8
+\BOOKMARK [2][-]{subsection.3.3}{Filtragem de arestas}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.4}{Heatmap}{section.3}% 10
+\BOOKMARK [2][-]{subsection.3.5}{M\351tricas de similaridade}{section.3}% 11
+\BOOKMARK [1][-]{section.4}{Conclus\343o}{}% 12

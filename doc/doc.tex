@@ -19,7 +19,7 @@
 \author{Larissa Leijôto, Péricles Alves, Rubens Emilio, Vinícius Garcia}
 \address{Departamento de Ciência da Computação \\
 	Universidade Federal de Minas Gerais
-	\email{$[$larissa,periclesroalves,rubens,vinicius$]$@dcc.ufmg.br}
+	\email{$[$leijoto,periclesrafael,rubens,garcia$]$@dcc.ufmg.br}
 }
 
 \begin{document}
@@ -60,39 +60,119 @@ comunidade, seja possível identificar padrões visuais entre as mesmas.
 % -----------------------------------------------------------------------------
 % Padrões em Comunidades 
 \section{Padrões em Comunidades}
-A base de dados a ser processada contém dados ...
+Os dados a serem analisados contêm comunidades compostas por pessoas,
+que, por sua vez, podem visitar diferentes lugares. O objetivo principal
+de representar tais comunidades visualmente é conseguir identificar,
+com pouco esforço, correlações entre pessoas de comunidades distintas.
 
 \subsection{Donut Graphs}
-Para representar cada indivíduo ...
+Para representar cada indivíduo, será utilizada uma técnica de representação
+do tipo gráfico de pizza, denominada {\it donut graph}. Este tipo de gráfico 
+apresenta, de forma bastante clara, a frequência com que determinado indivíduo
+visita diferentes lugares.
+
+Além da espessura de cada fatia do gráfico indicar a frequência de visitas,
+é possível associar cores a cada lugar. Isto possibilita a identificação
+de padrões visuais, principalmente quando diferentes gráficos (indivíduos)
+são comparados.
 
 \subsection{Posicionamento e Arestas}
-O posicionamento de cada pessoa em sua respectiva comunidade indica ...
-Sempre que pessoas de uma mesma comunidade visitam um mesmo lugar, é desenhada
-uma aresta entre as mesmas, possibilitando a percepção de mais padrões visuais.
+O posicionamento de cada pessoa em sua respectiva comunidade é utilizado
+para representar a semelhança entre pessoas de diferentes comunidades.
+Desta forma, se uma pessoa tem hábitos similares aos de uma pessoa de outra
+comunidade, ou seja, se visitam os mesmos tipos de lugares, então existe
+uma correlação entre elas, e o posicionamento das mesmas no espaço será igual.
 
-% No processo de análise visual de dados, há algumas tarefas analíticas comumente executadas pelo usuário tais como identificar, localizar, distinguir, categorizar, agrupar, distribuir, ordenar, comparar, associar, correlacionar, entre outras. O projeto de visualizações de dados deve, então, levar em conta essas necessidades básicas e facilitar essas tarefas analíticas. Nesse trabalho prático, vocês devem implementar um algoritmo que facilite ao usuário / leitor a identificação e associação de objetos similares visualmente, ou seja, através de atributos visuais pré-atentivos.
+Além disso, sempre que pessoas de uma mesma comunidade visitam um mesmo lugar,
+é desenhada uma aresta entre as mesmas, facilitando a identificação
+de mais padrões visuais. Neste caso, os padrões serão referentes às conexões
+entre cada {\it donut graph}.
+
+\subsection{* Heatmap}
+A fim de explorar outras técnicas de visualização, procuramos alguma
+abordagem que sumarizasse as correlações entre as pessoas de diferentes
+comunidades. Com isto, decidimos implementar o modelo de visualização
+por {\it heatmap}, muito úteis na representação de grandes quantidades
+de dados, e sem o problema de sobrepor informações.
+
+No caso da análise de similaridade entre comunidades, criamos uma representação
+para cada indivíduo. Uma pessoa é descrita como um vetor da frequência com
+que a mesma visita lugares de tipos diferentes. Aos valores de frequência
+são associadas diferentes gradações de cores. 
 
 % -----------------------------------------------------------------------------
-% Detalhes de Implementação
-\section{Detalhes de Implementação}
-Detalhes de implementação...
+% Desafios e Detalhes de Implementação
+\section{Desafios e Detalhes de Implementação}
+Após a implementação das visualizações, foi possível tirar algumas conclusões
+a respeito dos dados analisados. Tais conclusões são obtidas a partir
+de padrões visuais nas imagens criadas.
 
-% -----------------------------------------------------------------------------
-% Padrões Encontrados
-\section{Padrões Encontrados}
-Vimos os repousantes externos...
+\subsection{Posicionamento de indivíduos nos gráficos de tipo Donut}
+Ao plotar os plotar os gráficos de tipo {\it donut}, foi preciso definir
+posições padrão para cada indivíduo. A fim de minimizar a poluição visual,
+decidimos posicionar os indivíduos dispondo-os sobre um círculo.
+Desta forma, tanto conseguimos evitar sobreposições -- um problema inerente
+à técnica de visualização utilizada --, como conseguimos melhorar o aspecto
+visual das arestas nos gráficos.
 
-E, como um todo, é possível perceber grande similaridade entre
-as comunidades...
+\subsection{Detecção de outliers}
+Os gráficos gerados representam comunidades de indivíduos. O posicionamento
+de pessoas de comunidades diferentes, em seus respectivos gráficos, depende
+diretamente da similaridade entre tais pessoas. No entando, existem pessoas
+que não apresentam padrões de visitas similares aos de nenhuma das outras
+pessoas.
+
+O gráfico abaixo mostra a soma das distâncias de cada indivíduo em relação
+a todos os outros. A partir do gráfico, é possível perceber que alguns
+indivíduos possuem distâncias muito altas em relação aos outros, e,
+consequentemente, têm hábitos não similares aos de qualquer outra pessoa.
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=.07]{../visualizacao-tp1/img/sum_distance.pdf}
+\caption{Soma de distâncias de todas para todas as pessoas}
+\end{figure}
+
+\subsection{Filtragem de arestas}
+Sobre o resultado inicial dos gráficos, notamos que os grafos de {\it donuts}
+eram completos, ou seja, tinham arestas entre todos os indivíduos.
+A fim de reduzir ainda mais a poluição visual, decidimos parametrizar
+a inclusão de arestas nos gráficos. Assim, para que exista uma aresta
+entre dois indivíduos, os mesmos têm que ter visitado determinado lugar
+uma quantidade mínima de vezes -- definida na interface web desenvolvida.
+
+\subsection{Heatmap}
+Após a implementação da visualização por {\it heatmap}, podemos perceber
+que as pessoas com mesmo identificador eram, no geral, agrupadas
+como similares. Além disso, vimos também que esta abordagem produz resultados
+visualmente mais claros e intuitivos que a original -- {\it donut graphs}.
+
+\subsection{Métricas de similaridade}
+Para o trabalho, foram implementadas duas métricas de similaridade.
+A primeira, sugerida na especificação, foi a distância euclideana.
+A segunda métrica utilizada foi a similaridade de cosseno.
+Em relação aos resultados, ambas as métricas produziram resultados visuais
+similares, apesar da métrica de similaridade de cosseno ser mais robusta
+sobre dados com alta dimensionalidade.
 
 % -----------------------------------------------------------------------------
 % Conclusão
 \section{Conclusão}
-Conclusão...
+Durante a análise visual de dados, o usuário é o responsável
+por identificar, distinguir, categorizar e comparar informações a ele
+apresentadas. Desta forma, uma boa estratégia de visualização é aquela
+que facilita o trablho do usuário, ou seja, que propicia a identificação
+de padrões com pouco esforço.
 
-% -----------------------------------------------------------------------------
-% Referências
-% \bibliographystyle{sbc}
-% \bibliography{ref}
+Com isso, notamos durante o trabalho, que a técnica de {\it Heatmap},
+relativamente mais simples que os {\it Donut graphs}, tem resultado visual
+mais representativo. Ou seja, é possível identificar, de forma mais intuitiva,
+os padrões existentes entre as comunidades.
+
+Foram implementadas duas interfaces web, uma para cada visualização
+desenvolvida. Para acessar o trabalho principal, feito com os gráficos
+de {\it donuts}, o link utilizado é 
+\url{http://dcc.ufmg.br/~periclesrafael/tp-visu/visualization.html}.
+E, para o trabalho extra, o mesmo foi hospedado em
+\url{http://dcc.ufmg.br/~rubens/dv/heatmap.html}.
 
 \end{document}
