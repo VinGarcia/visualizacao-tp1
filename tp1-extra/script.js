@@ -155,17 +155,6 @@
   {
       value = this.value;
 
-       if(value=="Cosine")
-       {
-          var t = svg.transition().duration(3500);
-          t.selectAll(".hour")
-          .attr("y", function(d) { return (letras.indexOf(d.place)) * cellSize; })
-          .attr("x", function(d) { return (persons2[d.number].sorted_x) * cellSize; })
-          
-          var t2 = svg.transition().duration(0);
-          svg.selectAll(".dayLabel")
-          .text(function (d) { return '('+sorted2[d-1].graph + ',' + sorted2[d-1].person + ')'; })
-        }
         if(value=="Euclidean")
        {
           var t = svg.transition().duration(3500);
@@ -177,6 +166,28 @@
           svg.selectAll(".dayLabel")
           .text(function (d) { return '('+sorted[d-1].graph + ',' + sorted[d-1].person + ')'; })
        }
+       if(value=="Cosine")
+       {
+          var t = svg.transition().duration(3500);
+          t.selectAll(".hour")
+          .attr("y", function(d) { return (letras.indexOf(d.place)) * cellSize; })
+          .attr("x", function(d) { return (persons2[d.number].sorted_x) * cellSize; })
+          
+          var t2 = svg.transition().duration(0);
+          svg.selectAll(".dayLabel")
+          .text(function (d) { return '('+sorted2[d-1].graph + ',' + sorted2[d-1].person + ')'; })
+       }
+       if(value=="Unordered")
+       {
+          var t = svg.transition().duration(3500);
+          t.selectAll(".hour")
+          .attr("y", function(d) { return (letras.indexOf(d.place)) * cellSize; })
+          .attr("x", function(d) { return (persons2[d.number].number) * cellSize; })
+          
+          //var t2 = svg.transition().duration(0);
+          //svg.selectAll(".dayLabel")
+          //.text(function (d) { return '('+sorted2[d-1].graph + ',' + sorted2[d-1].person + ')'; })
+        }
 
     })
 });
