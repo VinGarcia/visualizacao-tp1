@@ -10,6 +10,8 @@
     <script src="http://d3js.org/d3.v3.js"></script>
     <script type="text/javascript" src="distMatrix.js"></script>
     <script type="text/javascript" src="simSort.js"></script>
+    <script type="text/javascript" src="sortedPeople2.js"></script>
+    <script type="text/javascript" src="persons2.js"></script>
     <script type="text/javascript" src="sortedPeople.js"></script>
     <script type="text/javascript" src="persons.js"></script>
     <script type="text/javascript" src="script.js"></script>
@@ -18,7 +20,11 @@
 		<p><span id="value"></p>
 	</div>
   <body>
-    <div id="chart"></div>
+    <select id="metric">
+      <option value="Cosine">Cosine</option>
+      <option value="Euclidean">Euclidean</option>
+    </select>
+  <div id="chart"></div>
   </body>
 
 </html>

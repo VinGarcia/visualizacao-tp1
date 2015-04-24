@@ -30,15 +30,21 @@ if(typeof exports !== 'undefined') {
 
   });
 
-  var dm = distMatrix(data)
+  var dm = distMatrix(data, "euclidean")
 	var matrix = dm[0];
 	var persons = dm[1];
-
 	var sorted = simSort(persons, matrix);
 
+  var dm2 = distMatrix(data, "cosine")
+	var matrix2 = dm2[0];
+	var persons2 = dm2[1];
+	var sorted2 = simSort(persons2, matrix2);
+
 	console.log('chegou, vai imprimir!');
-  fs.writeFileSync('sortedPeople.js', JSON.stringify(sorted));
-  //fs.writeFileSync('persons.js', JSON.stringify(persons));
+  fs.writeFileSync('sortedPeople.js','var sorted ='+ JSON.stringify(sorted));
+  fs.writeFileSync('persons.js', 'var persons ='+ JSON.stringify(persons));
+  fs.writeFileSync('sortedPeople2.js','var sorted2 ='+ JSON.stringify(sorted2));
+  fs.writeFileSync('persons2.js', 'var persons2 ='+ JSON.stringify(persons2));
 }
 
 // distMatrix expect each line of 'data'
@@ -50,7 +56,7 @@ if(typeof exports !== 'undefined') {
 //   place: d.place,
 //   freq: +d.freq,
 // };
-function distMatrix(data) {
+function distMatrix(data, metric) {
 
 	// Make vector of people:
 	var people = []
@@ -74,14 +80,22 @@ function distMatrix(data) {
 	// Now build the matrix:
 	var matrix = []
 	var count = 0
-	for(var p1 in people) {
-
+	for(var p1 in people)
+	{
 		matrix[p1] = [];
 
-    for(var p2 in people) {
-      matrix[p1][p2] = similarity(people[p1], people[p2]);
-			//if(matrix[p1][p2]===NaN) count++;
-			//if(count++<100) console.log(matrix[p1][p2]);
+    	for(var p2 in people) 
+   		{
+   			if(metric == "cosine")
+   			{
+   				matrix[p1][p2] = cosine(people[p1], people[p2]);
+   			}
+   			else if(metric == "euclidean")
+   			{
+      			matrix[p1][p2] = similarity(people[p1], people[p2]);
+				//if(matrix[p1][p2]===NaN) count++;
+				//if(count++<100) console.log(matrix[p1][p2]);
+			}
 		}
 	}
 	//console.log('count: ', count);
@@ -89,6 +103,38 @@ function distMatrix(data) {
 	return [matrix, people];
 
 	/* * * * * Functions: * * * * */
+
+	function cosine(p1, p2)
+	{
+		var sim = 0;
+		var numerador = 0;
+		var denominadorA = 0;
+		var denominadorB = 0;
+		var denominador = 1;
+
+		var a,b;
+
+
+		for( var L in places)
+		{
+
+			a = p1.places[places[L]];
+		  	b = p2.places[places[L]];
+	  	
+		  	numerador += a * b;
+
+		  	denominadorA += Math.pow(a, 2);
+		  	denominadorB += Math.pow(b, 2);
+	
+		}
+
+		denominador = Math.sqrt(denominadorA) * Math.sqrt(denominadorB);
+
+		sim = numerador/denominador;
+
+		return -sim;
+	}
+
 
   // Similarity metric: euclidean
   function similarity(p1, p2) {

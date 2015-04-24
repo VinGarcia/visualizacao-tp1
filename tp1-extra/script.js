@@ -31,11 +31,14 @@
 
   function(error, data) {
 
-    //var dm = distMatrix(data)
+    // var dm = distMatrix(data, 'cosine')
 		//var matrix = dm[0];
 		//var persons = dm[1];
 
 		//var sorted = simSort(persons, matrix);
+
+    // var sorted = sorted2;
+    //var persons = persons2;
 
     var colorScale = d3.scale.quantile()
         .domain([0,1,2,3,4,5,6])
@@ -52,13 +55,17 @@
           .data(people)
           .enter().append("text")
           .text(function (d) { return '('+sorted[d-1].graph + ',' + sorted[d-1].person + ')'; })
+          //.text(function (d) { return d-1; })//return '('+persons[d].graph + ',' + persons[d].person + ')'; })
           .attr("x", 0)
-          .attr("y", function (d, i) { return i * cellSize; })
+          .attr("y", function (d, i) {
+            //return persons[d].number * cellSize
+            return i * cellSize; 
+          })
           .style("text-anchor", "left")
           .attr("transform", "translate("+cellSize/2 + ",-6) rotate (-90)")
           .attr("class",  function (d,i) { return "colLabel mono c"+i;} )
 		      .on("mouseover", function(d) {
-						d3.select(this).classed("text-hover",true);
+					 d3.select(this).classed("text-hover",true);
 
 					  //Update the tooltip position and value
 					  d3.select("#tooltip")
@@ -143,4 +150,33 @@
        .attr("x", function(d, i) { return legendElementWidth * i; })
        .attr("y", height + 20);
 
+
+  d3.select("#metric").on("change",function()
+  {
+      value = this.value;
+
+       if(value=="Cosine")
+       {
+          var t = svg.transition().duration(3500);
+          t.selectAll(".hour")
+          .attr("y", function(d) { return (letras.indexOf(d.place)) * cellSize; })
+          .attr("x", function(d) { return (persons2[d.number].sorted_x) * cellSize; })
+          
+          var t2 = svg.transition().duration(0);
+          svg.selectAll(".dayLabel")
+          .text(function (d) { return '('+sorted2[d-1].graph + ',' + sorted2[d-1].person + ')'; })
+        }
+        if(value=="Euclidean")
+       {
+          var t = svg.transition().duration(3500);
+          t.selectAll(".hour")
+          .attr("y", function(d) { return (letras.indexOf(d.place)) * cellSize; })
+          .attr("x", function(d) { return (persons[d.number].sorted_x) * cellSize; })
+          
+          var t2 = svg.transition().duration(0);
+          svg.selectAll(".dayLabel")
+          .text(function (d) { return '('+sorted[d-1].graph + ',' + sorted[d-1].person + ')'; })
+       }
+
+    })
 });
