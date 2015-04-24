@@ -65,7 +65,9 @@
 						.style("left", (d3.event.pageX+10) + "px")
 						.style("top", (d3.event.pageY-10) + "px")
 						.select("#value")
-						.text("texto");
+						.text(function(){
+						return 'Grafico: '+sorted[d-1].graph+'\n'+'Pessoa: '+sorted[d-1].person;
+						});
 					  //Show the tooltip
 						d3.select("#tooltip").classed("hidden", false);
 					})
@@ -97,7 +99,25 @@
         .attr("class", "hour bordered")
         .attr("width", cellSize)
         .attr("height", cellSize)
-        .style("fill", function(d) { return colorScale(d.freq); });
+        .style("fill", function(d) { return colorScale(d.freq); })
+		    .on("mouseover", function(d) {
+					d3.select(this).classed("text-hover",true);
+
+				  //Update the tooltip position and value
+				  d3.select("#tooltip")
+					.style("left", (d3.event.pageX+10) + "px")
+					.style("top", (d3.event.pageY-10) + "px")
+					.select("#value")
+					.text(function(){
+					  return 'Grafico: '+d.graph+'\n'+'Pessoa: '+d.person;
+					});
+				  //Show the tooltip
+					d3.select("#tooltip").classed("hidden", false);
+				})
+				.on("mouseout", function(d) {
+					d3.select(this).classed("text-hover",false);
+					d3.select("#tooltip").classed("hidden", true);
+				})
 
     heatMap.transition().duration(10)
         .style("fill", function(d) { return colorScale(d.freq); });

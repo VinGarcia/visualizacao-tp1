@@ -28,6 +28,7 @@ function simSort(people, matrix) {
 	for(var i in sorted) {
 		var num = sorted[i].number;
     people[num].sorted_x = i;
+		sorted[i].sorted_x = i;
 	}
 
 	return sorted;

@@ -7,10 +7,45 @@ rect.bordered {
   stroke-width: 1px;   
 }
 
+/* disable text selection */
+svg *::selection {
+   background : transparent;
+}
+
+svg *::-moz-selection {
+   background:transparent;
+} 
+
+svg *::-webkit-selection {
+   background:transparent;
+}
+
+rect.selection {
+  stroke          : #333;
+  stroke-dasharray: 4px;
+  stroke-opacity  : 0.5;
+  fill            : transparent;
+}
+
+rect.cell-border {
+  stroke: #eee;
+  stroke-width:0.3px;   
+}
+
+rect.cell-selected {
+  stroke: rgb(51,102,153);
+  stroke-width:0.5px;   
+}
+
+rect.cell-hover {
+  stroke: #F00;
+  stroke-width:0.3px;   
+}
+
 text.mono {
-  font-size: 10pt;
+  font-size: 9pt;
   font-family: Consolas, courier;
-  fill: black;
+  fill: #aaa;
 }
 
 text.text-selected {
@@ -25,7 +60,7 @@ text.text-hover {
 }
 #tooltip {
   position: absolute;
-  width: 200px;
+  width: 70px;
   height: auto;
   padding: 10px;
   background-color: white;

@@ -37,8 +37,8 @@ if(typeof exports !== 'undefined') {
 	var sorted = simSort(persons, matrix);
 
 	console.log('chegou, vai imprimir!');
-  //fs.writeFileSync('sortedPeople.js', JSON.stringify(sorted));
-  fs.writeFileSync('persons.js', JSON.stringify(persons));
+  fs.writeFileSync('sortedPeople.js', JSON.stringify(sorted));
+  //fs.writeFileSync('persons.js', JSON.stringify(persons));
 }
 
 // distMatrix expect each line of 'data'
