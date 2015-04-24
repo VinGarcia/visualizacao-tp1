@@ -32,17 +32,33 @@ Person.prototype.add = function(place,id) {
 // used to draw edges.
 Person.prototype.goesToSamePlace = function(person) {
   var matchCount = 0;
+  var labels = new Set();
 
   for (var i = 0; i < this.placeTypes.length; i++)
     for (var j = 0; j < person.placeTypes.length; j++)
       if ((this.placeTypes[i] == person.placeTypes[j]) &&
-          (this.placeIDs[i] == person.placeIDs[j]))
+          (this.placeIDs[i] == person.placeIDs[j])) {
         matchCount++;
+        labels.add(this.placeTypes[i] + ":" + this.placeIDs[i].toString());
+      }
 
   var percentMatch = (matchCount / Math.max(this.placeTypes.length,
                                             person.placeTypes.length));
 
+  var label = "";
+  var labelsArray = Array.from(labels);
+
+  // Build the edge label.
+  for (var i = 0; i < labelsArray.length; i++) {
+    if (i != 0)
+      label += ",";
+
+    label += labelsArray[i];
+  }
+    
+
   var ret = {};
+  ret.label = label;
   ret.percentMatch = percentMatch;
 
   return ret;

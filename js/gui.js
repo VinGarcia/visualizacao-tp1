@@ -70,8 +70,6 @@ function drawCharts(graph, graphID, canvasSide) {
       .style("stroke", "black")
       .style("fill", "none");
 
-  redrawEdges(graphID);
-
   // Prevent edged from overlapping the person ID by inserting a white circle
   // over it.
   svg.append("circle")
@@ -89,7 +87,10 @@ function drawCharts(graph, graphID, canvasSide) {
   // Tooltip text box.
   var tooltipDiv = d3.select("body").append("div")
       .attr("class", "tooltip")
+      .attr("id", "tooltip_box")
       .style("opacity", 0);
+
+  redrawEdges(graphID);
 
   // Fill each chart with data.
   var g = svg.selectAll("g")
@@ -136,6 +137,7 @@ function drawCharts(graph, graphID, canvasSide) {
 function redrawEdges(graphID) {
   var edgeThreshold = document.getElementById("edgeThreshold").value / 100;
   var baseSVG = d3.select("#baseSVG");
+  var tooltipDiv = d3.select("#tooltip_box");
 
   // Remove old edges before redrawing.
   d3.selectAll("line").remove();
@@ -154,7 +156,26 @@ function redrawEdges(graphID) {
       .attr("x2", edge.x2)
       .attr("y2", edge.y2)
       .attr("stroke-width", 2)
-      .attr("stroke", "black");
+      .attr("stroke", "black")
+      // Add label tooltip.
+      .on("mouseover", function() {
+          tooltipDiv.transition()
+          .duration(200)
+          .style("opacity", .95);
+          tooltipDiv.html(edge.label)
+          .style("left", (d3.event.pageX) + "px")
+          .style("top", (d3.event.pageY - 28) + "px");
+          tooltipDiv
+          .style("width", (edge.label.length * 6) + "px")
+          .style("height", "12px")
+      })
+      .on("mouseout", function() {
+          tooltipDiv.transition()
+              .duration(200)
+              .style("opacity", 0)
+              .style("width", "115px")
+              .style("height", "24px")
+      });
   }
 }
 
